@@ -8,14 +8,24 @@ function Note({ note, handleClick }) {
       onClick={handleClick}
     >
       {note.content}
-      <strong>{note.important ? 'important' : ''}</strong>
+      <strong>
+        {' '}
+        {note.important ? 'important' : ''}
+      </strong>
     </li>
   );
 }
 
 function Notes() {
   const dispatch = useDispatch();
-  const notes = useSelector((state) => state);
+  const notes = useSelector(({ filter, notes }) => {
+    if (filter === 'ALL') {
+      return notes;
+    }
+    return filter === 'IMPORTANT'
+      ? notes.filter((note) => note.important)
+      : notes.filter((note) => !note.important);
+  });
 
   return (
     <ul>
