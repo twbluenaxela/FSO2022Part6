@@ -17,7 +17,7 @@ function Note({ note, handleClick }) {
 }
 
 function Notes(props) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   // const notes = useSelector(({ filter, notes }) => {
   //   if (filter === 'ALL') {
@@ -37,7 +37,7 @@ function Notes(props) {
         <Note
           key={note.id}
           note={note}
-          handleClick={() => dispatch(toggleImportanceOf(note.id))}
+          handleClick={() => props.toggleImportanceOf(note.id)}
         />
 
       ))}
@@ -45,16 +45,24 @@ function Notes(props) {
   );
 }
 
-const mapStateToProps = (state) => {
-  if (state.filter === 'ALL') {
-    return state.notes;
-  }
-  return state.filter === 'IMPORTANT'
-    ? state.notes.filter((note) => note.important)
-    : state.notes.filter((note) => !note.important);
+// const mapStateToProps = (state) => {
+//   if (state.filter === 'ALL') {
+//     return state.notes;
+//   }
+//   return state.filter === 'IMPORTANT'
+//     ? state.notes.filter((note) => note.important)
+//     : state.notes.filter((note) => !note.important);
+// };
+const mapStateToProps = (state) => ({
+  notes: state.notes,
+  filter: state.filter,
+});
+
+const mapDispatchToProps = {
+  toggleImportanceOf,
 };
 
-const ConnectedNotes = connect(mapStateToProps)(Notes);
+// const ConnectedNotes
 
 // export default Notes;
-export default ConnectedNotes;
+export default connect(mapStateToProps, mapDispatchToProps)(Notes);
