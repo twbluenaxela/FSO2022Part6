@@ -1,12 +1,13 @@
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { createNote } from '../reducers/noteReducer';
+import noteService from '../services/notes';
 
 function NewNote(props) {
   // const dispatch = useDispatch();
   // console.log(createNote);
   // console.log(props.createNote);
 
-  const addNote = (event) => {
+  const addNote = async (event) => {
     event.preventDefault();
     const content = event.target.note.value;
     event.target.note.value = '';
@@ -15,7 +16,7 @@ function NewNote(props) {
 
     // store.dispatch(createNote(content));
     // I was wondering why it wasn't updating the display.
-    console.log(store.getState());
+    // console.log(store.getState());
   };
   return (
     <form onSubmit={addNote}>
